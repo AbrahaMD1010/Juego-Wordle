@@ -2,7 +2,6 @@
 # @autor: Magno Efren
 # Youtube: https://www.youtube.com/c/MagnoEfren
 
-import os
 import tkinter as tk
 from tkinter import Tk, Button, Entry, Label, messagebox, PhotoImage
 from tkinter import StringVar, Frame
@@ -37,7 +36,7 @@ class Wordle(Frame):
         self.frame_control.grid_propagate(0)
         self.frame_control.grid(column=0, row=2, sticky='snew')
 
-        Label(self.frame_titulo,  bg='black', fg='white', text=f'WORDLE con {difi} letras',
+        Label(self.frame_titulo,  bg='black', fg='white', text='WORDLE',
               font=('Arial', 25, 'bold')).pack(side='top')
 
         self.signal = Label(self.frame_control,  bg='black', fg='white', text=f'Ingrese una palabra de {difi} letras',
@@ -65,22 +64,27 @@ class Wordle(Frame):
     
     def palabra_aleatoria(self):
         self.lemario = dict()
-        archivo = open(os.path.join("lemarios", f"data{difi}.txt"), 'r', encoding="utf-8")  
+        if difi == 4:
+            archivo = open('lemarios/data4.txt', 'r', encoding="utf-8")  
+
+        elif difi == 5:
+            archivo = open('lemarios/data5.txt', 'r', encoding="utf-8") 
+
+        elif difi == 6:
+            archivo = open('lemarios/data6.txt', 'r', encoding="utf-8") 
+
+        elif difi == 7:
+            archivo = open('lemarios/data7.txt', 'r', encoding="utf-8") 
+
+        elif difi == 8:
+            archivo = open('lemarios/data8.txt', 'r', encoding="utf-8") 
 
         #Aqui agrego las palabras del txt a un diccionario, ya que la insercion y busqueda es O(1)
-<<<<<<< HEAD
         for linea in archivo:
             palabra = linea.strip("\n")
             self.lemario[palabra] = difi
         self.p_a = random.choice(list(self.lemario.keys()))    #Convertir el diccionario a una lista es 0(N)
         archivo.close()
-=======
-        with archivo:
-            for linea in archivo:
-                palabra = linea.strip("\n")
-                self.lemario[palabra] = difi
-            self.p_a = random.choice(list(self.lemario.keys()))    #Convertir el diccionario a una lista es 0(N)
->>>>>>> 40e0c76d0e67980700ec5dee02cfca0d328483f8
 
     def verificar_palabra(self):
         palabra = self.texto.get().upper()
@@ -188,11 +192,7 @@ def crear_frame_juego(dificultad):
         global root
         root = Wordle(ventana)
 
-<<<<<<< HEAD
          
-=======
-        # root.mainloop()
->>>>>>> 40e0c76d0e67980700ec5dee02cfca0d328483f8
 
 
 def dar_inicio():

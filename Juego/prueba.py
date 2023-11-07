@@ -69,8 +69,25 @@ class Wordle(Frame):
             self.p_a = random.choice(list(self.lemario.keys()))    #Convertir el diccionario a una lista es 0(N)
 
     def verificar_palabra(self):
-        palabra = self.texto.get().lower()
 
+        
+        if self.fila <= 6:
+            for k in range(difi):
+                        self.cuadros = Label(self.frame_cuadros, width=5, height=2 , fg='white',
+                                            bg=self.gris, font=('Geometr706 BlkCn BT', 25, 'bold'))
+                        j=0
+                        while j<difi:
+                            self.cuadros.grid(column=j, row=self.fila, padx=5, pady=5)
+                            self.cuadros['bg'] = self.gris
+                            j +=1
+                        
+
+                        self.fila = self.fila + 1
+
+        palabra = self.texto.get().upper()
+        
+
+        self.fila = 0
         x = list(filter(lambda x: palabra in x, self.lemario.keys()))
         if len(x) == 1 and len(palabra) == difi:
             self.signal['text'] = ''

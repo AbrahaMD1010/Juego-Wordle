@@ -109,8 +109,13 @@ class Wordle(Frame):
             self.fila = self.fila + 1
             if self.fila <= 6 and self.p_a == palabra:
                 messagebox.showinfo('GANASTE', 'FELICIDADES')
+                # self.frame_cuadros.pack_forget()
+                # self.frame_control.pack_forget()
+                # self.frame_titulo.pack_forget()
+                # crear_frame_inicio()
                 self.master.destroy()
                 self.master.quit()
+                dar_inicio()
 
             if self.fila == 6 and self.p_a != palabra:
                 messagebox.showinfo('PERDISTE', 'INTENTALO DE NUEVO')
@@ -199,13 +204,5 @@ def dar_inicio():
     ventana.mainloop()
 
 if __name__ == "__main__":
-    ventana = Tk()
-    ventana.config(bg='black')
-    ventana.geometry('950x750')    #'950x750'
-    ventana.resizable(0, 0)
-    ventana.title('Wordle')
-
-    crear_frame_inicio()
-
-    ventana.mainloop()
+    dar_inicio()
 

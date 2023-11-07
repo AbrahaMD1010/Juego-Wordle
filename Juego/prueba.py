@@ -109,6 +109,9 @@ class Wordle(Frame):
             self.fila = self.fila + 1
             if self.fila <= 6 and self.p_a == palabra:
                 messagebox.showinfo('GANASTE', 'FELICIDADES')
+                self.frame_cuadros.grid_forget()
+                self.frame_control.grid_forget()
+                crear_frame_inicio()
                 dar_inicio()
                 self.master.destroy()
                 self.master.quit()

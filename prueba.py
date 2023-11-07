@@ -109,6 +109,7 @@ class Wordle(Frame):
             self.fila = self.fila + 1
             if self.fila <= 6 and self.p_a == palabra:
                 messagebox.showinfo('GANASTE', 'FELICIDADES')
+                dar_inicio()
                 self.master.destroy()
                 self.master.quit()
 
@@ -119,7 +120,8 @@ class Wordle(Frame):
         else:
             self.signal['text'] = 'Esta palabra no se encuentra en el lemario, intente con otra'
 
-
+    # def ocultar_frame(self):
+    #     self.grid_forget() 
 
 
 def crear_frame_inicio():
@@ -199,13 +201,13 @@ def dar_inicio():
     ventana.mainloop()
 
 if __name__ == "__main__":
-    ventana = Tk()
-    ventana.config(bg='black')
-    ventana.geometry('950x750')    #'950x750'
-    ventana.resizable(0, 0)
-    ventana.title('Wordle')
+    # ventana = Tk()
+    # ventana.config(bg='black')
+    # ventana.geometry('1110x900')    #'950x750'
+    # ventana.resizable(0, 0)
+    # ventana.title('Wordle')
 
-    crear_frame_inicio()
+    # crear_frame_inicio()
 
-    ventana.mainloop()
-
+    # ventana.mainloop()
+    dar_inicio()

@@ -24,19 +24,19 @@ class Wordle(Frame):
 
     def crer_widgets(self):
         self.frame_titulo = Frame(
-            self.master, bg='black', width=900, height=580)
+            self.master, bg='black', width=900, height=300)
         self.frame_titulo.grid_propagate(0)
         self.frame_titulo.grid(column=0, row=0, sticky='nsew')
         self.frame_cuadros = Frame(
-            self.master, bg='black', width=950, height=650)
+            self.master, bg='black', width=950, height=580)
         self.frame_cuadros.grid_propagate(0)
         self.frame_cuadros.grid(column=0, row=1, sticky='snew')
         self.frame_control = Frame(
-            self.master, bg='black', width=400, height=100)
+            self.master, bg='black', width=400, height=10)
         self.frame_control.grid_propagate(0)
         self.frame_control.grid(column=0, row=2, sticky='snew')
 
-        Label(self.frame_titulo,  bg='black', fg='white', text='WORDLE',
+        Label(self.frame_titulo,  bg='black', fg='white', text=f'WORDLE con {difi} letras',
               font=('Arial', 25, 'bold')).pack(side='top')
 
         self.signal = Label(self.frame_control,  bg='black', fg='white', text=f'Ingrese una palabra de {difi} letras',
@@ -84,6 +84,7 @@ class Wordle(Frame):
             palabra = linea.strip("\n")
             self.lemario[palabra] = difi
         self.p_a = random.choice(list(self.lemario.keys()))    #Convertir el diccionario a una lista es 0(N)
+        archivo.close()
 
     def verificar_palabra(self):
         palabra = self.texto.get().upper()
@@ -109,18 +110,20 @@ class Wordle(Frame):
             self.fila = self.fila + 1
             if self.fila <= 6 and self.p_a == palabra:
                 messagebox.showinfo('GANASTE', 'FELICIDADES')
-                # self.frame_cuadros.pack_forget()
-                # self.frame_control.pack_forget()
-                # self.frame_titulo.pack_forget()
-                # crear_frame_inicio()
+                respuesta = tk.messagebox.askquestion("Wordle", "¿Quieres volver al inicio para seguir jugando?")
                 self.master.destroy()
                 self.master.quit()
-                dar_inicio()
+                if respuesta == "yes":
+                    dar_inicio()
+                
 
             if self.fila == 6 and self.p_a != palabra:
                 messagebox.showinfo('PERDISTE', 'INTENTALO DE NUEVO')
+                respuesta = tk.messagebox.askquestion("Wordle", "¿Quieres volver al inicio para seguir jugando?")
                 self.master.destroy()
                 self.master.quit()
+                if respuesta == "yes":
+                    dar_inicio()
         else:
             self.signal['text'] = 'Esta palabra no se encuentra en el lemario, intente con otra'
 
@@ -134,11 +137,12 @@ def crear_frame_inicio():
     frame_inicio.config(bg="black")
 
     etiqueta_wordle = tk.Label(frame_inicio, text="Wordle", font=(
-        "Arial", 40), bg="black", fg="green")
+        "Arial", 100), bg="black", fg="green", padx=20, pady=20)
     etiqueta_wordle.pack()
 
     etiqueta_dificultad = tk.Label(
-        frame_inicio, text="Elige la dificultad de la partida: ", bg="black", fg="red", font=("Arial", 28))
+        frame_inicio, text="Elige la dificultad de la partida: ", bg="black", fg="red", font=("Arial", 46)
+        , padx=40, pady=40)
     etiqueta_dificultad.pack()
 
     frame_botones = tk.Frame(frame_inicio)
@@ -188,14 +192,14 @@ def crear_frame_juego(dificultad):
         global root
         root = Wordle(ventana)
 
-        root.mainloop()
+         
 
 
 def dar_inicio():
     global ventana
     ventana = Tk()
     ventana.config(bg='black')
-    ventana.geometry('1110x900')    #'950x750'
+    ventana.geometry('950x730')    #'950x750'
     ventana.resizable(0, 0)
     ventana.title('Wordle')
 

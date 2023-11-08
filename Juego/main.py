@@ -55,6 +55,15 @@ class Wordle(Frame):
         if len(texto.get()) > 0:
             texto.set(texto.get()[:difi])
 
+    def dibujar_cuadros_grises(self):
+        for f in range(6):
+            for j in range(difi):
+                self.cuadros = Label(self.frame_cuadros, width=5, height=2 , fg='white',
+                                         bg=self.gris, font=('Geometr706 BlkCn BT', 25, 'bold'))
+                self.cuadros.grid(column=j, row=f, padx=5, pady=5)
+                self.cuadros['bg'] = self.gris
+        
+
     #Esta funcion seria la que da inicio al juego
     
     def palabra_aleatoria(self):
@@ -71,7 +80,8 @@ class Wordle(Frame):
     def verificar_palabra(self):
         palabra = self.texto.get().lower()
 
-        x = list(filter(lambda x: palabra in x, self.lemario.keys()))
+        x = list(filter(lambda x: palabra in x, self.lemario.keys())) #O(1) o O(N)?
+        #X es la palabra insertada en una lista
         if len(x) == 1 and len(palabra) == difi:
             self.signal['text'] = ''
             print(f"Palabra: {self.p_a}, Intento: {palabra}")
@@ -91,7 +101,7 @@ class Wordle(Frame):
 
             self.fila = self.fila + 1
             if self.fila <= 6 and self.p_a == palabra:
-                messagebox.showinfo('GANASTE', 'FELICIDADES')
+                messagebox.showinfo('GANASTE', 'FELICIDADES ERES TODO UN GENIO')
                 respuesta = tk.messagebox.askquestion("Wordle", "¿Quieres volver al inicio para seguir jugando?")
                 self.master.destroy()
                 self.master.quit()
@@ -100,12 +110,16 @@ class Wordle(Frame):
                 
 
             if self.fila == 6 and self.p_a != palabra:
-                messagebox.showinfo('PERDISTE', 'INTENTALO DE NUEVO')
+                messagebox.showinfo('PERDISTE', 'INTENTALO DE NUEVO PERDEDOR')
                 respuesta = tk.messagebox.askquestion("Wordle", "¿Quieres volver al inicio para seguir jugando?")
                 self.master.destroy()
                 self.master.quit()
                 if respuesta == "yes":
                     dar_inicio()
+
+        elif len(palabra) != difi:
+            self.signal['text'] = f"La palabra debe contener {difi} letras"
+
         else:
             self.signal['text'] = 'Esta palabra no se encuentra en el lemario, intente con otra'
 
@@ -173,6 +187,7 @@ def crear_frame_juego(dificultad):
         
         global root
         root = Wordle(ventana)
+        root.dibujar_cuadros_grises()
 
          
 

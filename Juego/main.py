@@ -67,25 +67,20 @@ class Wordle(Frame):
     #Esta funcion seria la que da inicio al juego
     
     def palabra_aleatoria(self):
-        self.lemario = dict()
+        self.lemario = set()
         archivo = open(os.path.join("lemarios", f"data{difi}.txt"), 'r', encoding="utf-8") 
 
         #Aqui agrego las palabras del txt a un diccionario, ya que la insercion y busqueda es O(1)
         with archivo:
             for linea in archivo:
                 palabra = linea.strip("\n")
-                self.lemario[palabra] = difi
-            self.p_a = random.choice(list(self.lemario.keys()))    #Convertir el diccionario a una lista es 0(N)
+                self.lemario.add(palabra)
+            self.p_a = random.choice(list(self.lemario))    #Convertir el set a una lista es 0(N)
 
     def verificar_palabra(self):
         palabra = self.texto.get().lower()
 
-        if palabra in self.lemario.keys():   #O(1) pero si hay colisiones puede ser O(N)
-            x = True
-        else :
-            x = False 
-        #X es la palabra insertada en una lista
-        if x and len(palabra) == difi:
+        if palabra in self.lemario and len(palabra) == difi:  #La complejidad de buscar un string contenido en el set es O(1)
             self.signal['text'] = ''
             print(f"Palabra: {self.p_a}, Intento: {palabra}")
             if self.fila <= 6:

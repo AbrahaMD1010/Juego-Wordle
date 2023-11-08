@@ -80,9 +80,12 @@ class Wordle(Frame):
     def verificar_palabra(self):
         palabra = self.texto.get().lower()
 
-        x = list(filter(lambda x: palabra in x, self.lemario.keys())) #O(1) o O(N)?
+        if palabra in self.lemario.keys():   #O(1) pero si hay colisiones puede ser O(N)
+            x = True
+        else :
+            x = False 
         #X es la palabra insertada en una lista
-        if len(x) == 1 and len(palabra) == difi:
+        if x and len(palabra) == difi:
             self.signal['text'] = ''
             print(f"Palabra: {self.p_a}, Intento: {palabra}")
             if self.fila <= 6:

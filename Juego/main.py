@@ -19,35 +19,35 @@ class Wordle(Frame):
 
     def crer_widgets(self):
         self.frame_titulo = Frame(
-            self.master, bg='black', width=900, height=300)
+            self.master, bg='pale green', width=900, height=300)
         self.frame_titulo.grid_propagate(0)
         self.frame_titulo.grid(column=0, row=0, sticky='nsew')
         self.frame_cuadros = Frame(
-            self.master, bg='black', width=950, height=580)
+            self.master, bg='pale green', width=950, height=580)
         self.frame_cuadros.grid_propagate(0)
-        self.frame_cuadros.grid(column=0, row=1, sticky='snew')
+        self.frame_cuadros.grid(column=0, row=1, sticky='nsew')
         self.frame_control = Frame(
-            self.master, bg='black', width=400, height=10)
+            self.master, bg='pale green', width=400, height=10)
         self.frame_control.grid_propagate(0)
-        self.frame_control.grid(column=0, row=2, sticky='snew')
+        self.frame_control.grid(column=0, row=2, sticky='nsew')
 
-        Label(self.frame_titulo,  bg='black', fg='white', text='WORDLE',
-              font=('Arial', 25, 'bold')).pack(side='top')
+        Label(self.frame_titulo,  bg='pale green', fg='dark green', text='WORDLE',
+              font=('Bauhaus 93', 25, 'bold')).pack(side='top')
 
-        self.signal = Label(self.frame_control,  bg='black', fg='white', text=f'Ingrese una palabra de {difi} letras',
-                            font=('Arial', 12))
+        self.signal = Label(self.frame_control,  bg='pale green', fg='dark green', text=f'Ingrese una palabra de {difi} letras',
+                            font=('Bahnschrift', 20))
         self.signal.pack(side='left', expand=True)
 
-        self.palabra = Entry(self.frame_control, font=('Arial', 15), justify='center',
+        self.palabra = Entry(self.frame_control, font=('Bahnschrift', 15), justify='center',
                              textvariable=self.texto, fg='black', highlightcolor="green2", highlightthickness=2, width=12)
         self.palabra.pack(side='left', expand=True)
 
         self.enviar = Button(self.frame_control, text='Enviar', bg='gray50', activebackground='green2',
-                             fg='white', font=('Arial', 12, 'bold'), command=self.verificar_palabra)
+                             fg='white', font=('Bahnschrift', 22, 'bold'), command=self.verificar_palabra)
         self.enviar.pack(side='left', expand=True)
 
         self.borrar = Button(self.frame_control, text='Borrar', bg='gray50', activebackground='green2',
-                              fg='white', font=('Arial', 12, 'bold'), width=6, command=lambda: self.texto.set(''))
+                              fg='white', font=('Bahnschrift', 22, 'bold'), width=6, command=lambda: self.texto.set(''))
         self.borrar.pack(side='right', expand=True)
 
     #Aqui limito los caracteres que se pueden ingresar por consola, los cuales corresponden a la dificultad (cantidad de letras)
@@ -86,7 +86,7 @@ class Wordle(Frame):
             if self.fila <= 6:
                 for i, letra in enumerate(palabra):
                     self.cuadros = Label(self.frame_cuadros, width=5, height=2 , fg='white',
-                                         bg=self.gris, text=letra, font=('Geometr706 BlkCn BT', 25, 'bold'))
+                                         bg=self.gris, text=letra.upper(), font=('Geometr706 BlkCn BT', 25, 'bold'))
                     self.cuadros.grid(column=i, row=self.fila, padx=5, pady=5)
                     if letra == self.p_a[i]:
                         self.cuadros['bg'] = self.verde
@@ -128,31 +128,31 @@ def crear_frame_inicio():
     global frame_inicio
     frame_inicio = tk.Frame(ventana)
     frame_inicio.pack(fill="both")
-    frame_inicio.config(bg="black")
+    frame_inicio.config(bg="pale green")
 
     etiqueta_wordle = tk.Label(frame_inicio, text="Wordle", font=(
-        "Arial", 100), bg="black", fg="green", padx=20, pady=20)
+        "Bauhaus 93", 100), bg="pale green", fg="dark green", padx=20, pady=20)
     etiqueta_wordle.pack()
 
     etiqueta_dificultad = tk.Label(
-        frame_inicio, text="Elige la dificultad de la partida: ", bg="black", fg="red", font=("Arial", 46)
+        frame_inicio, text="Elige la Dificultad de la Partida", bg="pale green", fg="red", font=("Bahnschrift", 46)
         , padx=40, pady=40)
     etiqueta_dificultad.pack()
 
     frame_botones = tk.Frame(frame_inicio)
     frame_botones.pack()
-    frame_botones.config(bg="black")
+    frame_botones.config(bg="pale green")
 
     boton_4_letras = tk.Button(
-        frame_botones, text="4 letras", fg="red", font=("Arial", 20))
+        frame_botones, text="4 letras", fg="red", font=("Bahnschrift", 30))
     boton_5_letras = tk.Button(
-        frame_botones, text="5 letras", fg="red", font=("Arial", 20))
+        frame_botones, text="5 letras", fg="red", font=("Bahnschrift", 30))
     boton_6_letras = tk.Button(
-        frame_botones, text="6 letras", fg="red", font=("Arial", 20))
+        frame_botones, text="6 letras", fg="red", font=("Bahnschrift", 30))
     boton_7_letras = tk.Button(
-        frame_botones, text="7 letras", fg="red", font=("Arial", 20))
+        frame_botones, text="7 letras", fg="red", font=("Bahnschrift", 30))
     boton_8_letras = tk.Button(
-        frame_botones, text="8 letras", fg="red", font=("Arial", 20))
+        frame_botones, text="8 letras", fg="red", font=("Bahnschrift", 30))
 
     boton_4_letras.grid(row=0, column=0, padx=5, pady=5)
     boton_5_letras.grid(row=0, column=1, padx=5, pady=5)
@@ -193,7 +193,7 @@ def crear_frame_juego(dificultad):
 def dar_inicio():
     global ventana
     ventana = Tk()
-    ventana.config(bg='black')
+    ventana.config(bg='pale green')
     ventana.geometry('950x730')    #'950x750'
     ventana.resizable(0, 0)
     ventana.title('Wordle')

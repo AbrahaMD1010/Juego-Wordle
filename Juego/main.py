@@ -12,7 +12,6 @@ class Wordle(Frame):
         self.naranjado = '#E3B30E'
         self.gris = '#8F8E8C'
         self.texto = StringVar()
-        self.primera = True
         self.texto.trace("w", lambda *args: self.limitar(self.texto))
         self.crer_widgets()
         self.palabra_aleatoria()

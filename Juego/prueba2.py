@@ -14,26 +14,7 @@ class Wordle(Frame):
         self.texto = StringVar()
         self.texto.trace("w", lambda *args: self.limitar(self.texto))
         self.crer_widgets()
-        self.crear_lemario()
         self.palabra_aleatoria()
-
-    def crear_lemario(self):
-        self.lemarios = {}
-        dificultades = [4, 5, 6, 7, 8]
-        for dificultad in dificultades:
-            nombre_archivo = f'data{dificultad}.txt'
-            nombre_lemario = f'lemario{dificultad}'
-            self.lemarios[nombre_lemario] = self.crear_sets(f"lemarios/{nombre_archivo}")
-
-    def crear_sets(self, nombre_archivo):
-        lemario = set()
-    
-        with open(nombre_archivo, 'r', encoding='utf-8') as archivo:
-            for linea in archivo:
-                palabra = linea.strip()
-                lemario.add(palabra)
-
-        return lemario
 
     def crer_widgets(self):
         self.frame_titulo = Frame(
@@ -82,17 +63,18 @@ class Wordle(Frame):
                 self.cuadros['bg'] = self.gris
         
 
+    #Esta funcion seria la que da inicio al juego
+    
     def palabra_aleatoria(self):
         nombre_lemario = f'lemario{difi}'
-        lemario_actual = self.lemarios.get(nombre_lemario, set())
+        lemario_actual = lemarios.get(nombre_lemario, set())
         self.p_a = random.choice(list(lemario_actual))
 
     def verificar_palabra(self):
         palabra = self.texto.get().lower()
         nombre_lemario = f'lemario{difi}'
 
-
-        if palabra in self.lemarios[nombre_lemario] and len(palabra) == difi:  #La complejidad de buscar un string contenido en el set es O(1)
+        if palabra in lemarios[nombre_lemario] and len(palabra) == difi:  #La complejidad de buscar un string contenido en el set es O(1)
             self.signal['text'] = ''
             print(f"Palabra: {self.p_a}, Intento: {palabra}")
             if self.fila <= 6:
@@ -199,9 +181,6 @@ def crear_frame_juego(dificultad):
         root = Wordle(ventana)
         root.dibujar_cuadros_grises()
 
-         
-
-
 def dar_inicio():
     global ventana
     ventana = Tk()
@@ -213,6 +192,27 @@ def dar_inicio():
     crear_frame_inicio()
 
     ventana.mainloop()
+
+def crear_lemario(nombre_archivo):
+    lemario = set()
+ 
+    with open(nombre_archivo, 'r', encoding='utf-8') as archivo:
+        for linea in archivo:
+            palabra = linea.strip("\n")
+            lemario.add(palabra)
+
+    return lemario
+
+# Crear un diccionario para almacenar los conjuntos
+lemarios = {}
+
+# Definir conjuntos para cada archivo
+lemarios['lemario4'] = crear_lemario('lemarios/data4.txt')
+lemarios['lemario5'] = crear_lemario('lemarios/data5.txt')
+lemarios['lemario6'] = crear_lemario('lemarios/data6.txt')
+lemarios['lemario7'] = crear_lemario('lemarios/data7.txt')
+lemarios['lemario8'] = crear_lemario('lemarios/data8.txt')
+
 
 if __name__ == "__main__":
     dar_inicio()

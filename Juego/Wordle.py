@@ -4,6 +4,7 @@ from tkinter import Tk, Button, Entry, Label, messagebox, PhotoImage
 from tkinter import StringVar, Frame
 import random
 
+
 class Wordle(Frame):
     def __init__(self, master):
         super().__init__(master)
@@ -27,7 +28,8 @@ class Wordle(Frame):
         self.frame_cuadros.pack_propagate(0)
         self.frame_cuadros.grid(column=0, row=1, sticky='nsew')
 
-        self.contendor_cuadrados = Frame(self.frame_cuadros, bg="pale green", width=900, height=10)
+        self.contendor_cuadrados = Frame(
+            self.frame_cuadros, bg="pale green", width=900, height=10)
         # self.contendor_cuadrados.propagate(0)
         self.contendor_cuadrados.pack_propagate(0)
         self.contendor_cuadrados.pack(side='top')
@@ -53,10 +55,10 @@ class Wordle(Frame):
         self.enviar.pack(side='left', expand=True)
 
         self.borrar = Button(self.frame_control, text='Borrar', bg='gray50', activebackground='green2',
-                              fg='white', font=('Bahnschrift', 22, 'bold'), width=6, command=lambda: self.texto.set(''))
+                             fg='white', font=('Bahnschrift', 22, 'bold'), width=6, command=lambda: self.texto.set(''))
         self.borrar.pack(side='right', expand=True)
 
-    #Aqui limito los caracteres que se pueden ingresar por consola, los cuales corresponden a la dificultad (cantidad de letras)
+    # Aqui limito los caracteres que se pueden ingresar por consola, los cuales corresponden a la dificultad (cantidad de letras)
     def limitar(self, texto):
         if len(texto.get()) > 0:
             texto.set(texto.get()[:difi])
@@ -64,14 +66,13 @@ class Wordle(Frame):
     def dibujar_cuadros_grises(self):
         for f in range(6):
             for j in range(difi):
-                self.cuadros = Label(self.contendor_cuadrados, width=5, height=2 , fg='white',
-                                         bg=self.gris, font=('Geometr706 BlkCn BT', 25, 'bold'))
+                self.cuadros = Label(self.contendor_cuadrados, width=5, height=2, fg='white',
+                                     bg=self.gris, font=('Geometr706 BlkCn BT', 25, 'bold'))
                 self.cuadros.grid(column=j, row=f, padx=5, pady=5)
                 self.cuadros['bg'] = self.gris
-        
 
-    #Esta funcion seria la que da inicio al juego
-    
+    # Esta funcion seria la que da inicio al juego
+
     def palabra_aleatoria(self):
         nombre_lemario = f'lemario{difi}'
         lemario_actual = lemarios.get(nombre_lemario, set())
@@ -81,18 +82,19 @@ class Wordle(Frame):
         palabra = self.texto.get().lower()
         nombre_lemario = f'lemario{difi}'
 
-        if palabra in lemarios[nombre_lemario] and len(palabra) == difi:  #La complejidad de buscar un string contenido en el set es O(1)
+        # La complejidad de buscar un string contenido en el set es O(1)
+        if palabra in lemarios[nombre_lemario] and len(palabra) == difi:
             self.signal['text'] = ''
             print(f"Palabra: {self.p_a}, Intento: {palabra}")
             if self.fila <= 6:
                 for i, letra in enumerate(palabra):
-                    self.cuadros = Label(self.contendor_cuadrados, width=5, height=2 , fg='white',
+                    self.cuadros = Label(self.contendor_cuadrados, width=5, height=2, fg='white',
                                          bg=self.gris, text=letra.upper(), font=('Geometr706 BlkCn BT', 25, 'bold'))
                     self.cuadros.grid(column=i, row=self.fila, padx=5, pady=5)
                     if letra == self.p_a[i]:
                         self.cuadros['bg'] = self.verde
 
-                    if letra in self.p_a and  letra != self.p_a[i]:
+                    if letra in self.p_a and letra != self.p_a[i]:
                         self.cuadros['bg'] = self.naranjado
 
                     if letra not in self.p_a:
@@ -100,17 +102,19 @@ class Wordle(Frame):
 
             self.fila = self.fila + 1
             if self.fila <= 6 and self.p_a == palabra:
-                messagebox.showinfo('GANASTE', 'FELICIDADES ERES TODO UN GENIO')
-                respuesta = tk.messagebox.askquestion("Wordle", "¿Quieres volver al inicio para seguir jugando?")
+                messagebox.showinfo(
+                    'GANASTE', 'FELICIDADES ERES TODO UN GENIO')
+                respuesta = tk.messagebox.askquestion(
+                    "Wordle", "¿Quieres volver al inicio para seguir jugando?")
                 self.master.destroy()
                 self.master.quit()
                 if respuesta == "yes":
                     dar_inicio()
-                
 
             if self.fila == 6 and self.p_a != palabra:
                 messagebox.showinfo('PERDISTE', 'INTENTALO DE NUEVO PERDEDOR')
-                respuesta = tk.messagebox.askquestion("Wordle", "¿Quieres volver al inicio para seguir jugando?")
+                respuesta = tk.messagebox.askquestion(
+                    "Wordle", "¿Quieres volver al inicio para seguir jugando?")
                 self.master.destroy()
                 self.master.quit()
                 if respuesta == "yes":
@@ -134,8 +138,7 @@ def crear_frame_inicio():
     etiqueta_wordle.pack()
 
     etiqueta_dificultad = tk.Label(
-        frame_inicio, text="Elige la Dificultad de la Partida", bg="pale green", fg="red", font=("Bahnschrift", 46)
-        , padx=40, pady=40)
+        frame_inicio, text="Elige la Dificultad de la Partida", bg="pale green", fg="red", font=("Bahnschrift", 46), padx=40, pady=40)
     etiqueta_dificultad.pack()
 
     frame_botones = tk.Frame(frame_inicio)
@@ -169,29 +172,30 @@ def crear_frame_inicio():
                         dificultad=7: crear_frame_juego(dificultad))
     boton_8_letras.bind("<Button-1>", lambda event,
                         dificultad=8: crear_frame_juego(dificultad))
-    
-def crear_frame_juego(dificultad):
-        global difi
-        difi = dificultad
-        # print(difi)
-        # Eliminar el frame de inicio
-        # frame_inicio.pack_forget()
-        frame_inicio.forget()
 
-        # Crear un nuevo frame
-        # frame_juego = tk.Frame(ventana)
-        # frame_juego.grid()
-        
-        global root
-        root = Wordle(ventana)
-        root.dibujar_cuadros_grises()
+
+def crear_frame_juego(dificultad):
+    global difi
+    difi = dificultad
+    # print(difi)
+    # Eliminar el frame de inicio
+    # frame_inicio.pack_forget()
+    frame_inicio.forget()
+
+    # Crear un nuevo frame
+    # frame_juego = tk.Frame(ventana)
+    # frame_juego.grid()
+
+    global root
+    root = Wordle(ventana)
+    root.dibujar_cuadros_grises()
 
 
 def dar_inicio():
     global ventana
     ventana = Tk()
     ventana.config(bg='pale green')
-    ventana.geometry('950x730')    #'950x750'
+    ventana.geometry('950x730')  # '950x750'
     ventana.resizable(0, 0)
     ventana.title('Wordle')
 
@@ -199,9 +203,10 @@ def dar_inicio():
 
     ventana.mainloop()
 
+
 def crear_lemario(nombre_archivo):
     lemario = set()
- 
+
     with open(nombre_archivo, 'r', encoding='utf-8') as archivo:
         for linea in archivo:
             palabra = linea.strip("\n")
@@ -209,16 +214,15 @@ def crear_lemario(nombre_archivo):
 
     return lemario
 
+
 # Crear un diccionario para almacenar los conjuntos
 lemarios = {}
 
 # Definir conjuntos para cada archivo
 for i in range(4, 9):
-    lemarios[f'lemario{i}'] = crear_lemario(os.path.join('lemarios', f'data{i}.txt'))
-
-
+    lemarios[f'lemario{i}'] = crear_lemario(
+        os.path.join('lemarios', f'data{i}.txt'))
 
 
 if __name__ == "__main__":
     dar_inicio()
-

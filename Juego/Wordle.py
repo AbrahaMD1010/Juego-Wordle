@@ -4,6 +4,17 @@ from tkinter import Tk, Button, Entry, Label, messagebox, PhotoImage
 from tkinter import StringVar, Frame
 import random
 
+def normalize(s):
+    replacements = (
+        ("á", "a"),
+        ("é", "e"),
+        ("í", "i"),
+        ("ó", "o"),
+        ("ú", "u"),
+    )
+    for a, b in replacements:
+        s = s.replace(a, b).replace(a.upper(), b.upper())
+    return s
 
 class Wordle(Frame):
     def __init__(self, master):
@@ -205,6 +216,7 @@ def crear_lemario(nombre_archivo):
     with open(nombre_archivo, 'r', encoding='utf-8') as archivo:
         for linea in archivo:
             palabra = linea.strip("\n")
+            palabra = normalize(palabra)
             lemario.add(palabra)
 
     return lemario
@@ -215,8 +227,7 @@ lemarios = {}
 
 # Definir conjuntos para cada archivo
 for i in range(4, 9):
-    lemarios[f'lemario{i}'] = crear_lemario(
-        os.path.join('lemarios', f'data{i}.txt'))
+    lemarios[f'lemario{i}'] = crear_lemario(os.path.join('lemarios', f'data{i}.txt'))
 
 
 if __name__ == "__main__":

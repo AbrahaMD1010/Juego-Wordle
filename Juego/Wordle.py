@@ -213,11 +213,10 @@ def crear_lemario(nombre_archivo):
 lemarios = {}
 
 # Definir conjuntos para cada archivo
-lemarios['lemario4'] = crear_lemario('lemarios/data4.txt')
-lemarios['lemario5'] = crear_lemario('lemarios/data5.txt')
-lemarios['lemario6'] = crear_lemario('lemarios/data6.txt')
-lemarios['lemario7'] = crear_lemario('lemarios/data7.txt')
-lemarios['lemario8'] = crear_lemario('lemarios/data8.txt')
+for i in range(4, 9):
+    lemarios[f'lemario{i}'] = crear_lemario(os.path.join('lemarios', f'data{i}.txt'))
+
+
 
 
 if __name__ == "__main__":

@@ -179,12 +179,7 @@ def crear_frame_juego(dificultad):
     difi = dificultad
     # print(difi)
     # Eliminar el frame de inicio
-    # frame_inicio.pack_forget()
-    frame_inicio.forget()
-
-    # Crear un nuevo frame
-    # frame_juego = tk.Frame(ventana)
-    # frame_juego.grid()
+    frame_inicio.destroy()
 
     global root
     root = Wordle(ventana)

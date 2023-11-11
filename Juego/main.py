@@ -4,6 +4,20 @@ from tkinter import Tk, Button, Entry, Label, messagebox, PhotoImage
 from tkinter import StringVar, Frame
 import random
 
+def normalize(s):
+    replacements = (
+        ("á", "a"),
+        ("é", "e"),
+        ("í", "i"),
+        ("ó", "o"),
+        ("ú", "u"),
+    )
+    for a, b in replacements:
+        s = s.replace(a, b).replace(a.upper(), b.upper())
+    return s
+
+
+
 class Wordle(Frame):
     def __init__(self, master):
         super().__init__(master)
@@ -24,7 +38,14 @@ class Wordle(Frame):
         self.frame_cuadros = Frame(
             self.master, bg='pale green', width=950, height=580)
         self.frame_cuadros.grid_propagate(0)
+        self.frame_cuadros.pack_propagate(0)
         self.frame_cuadros.grid(column=0, row=1, sticky='nsew')
+
+        self.contendor_cuadrados = Frame(self.frame_cuadros, bg="pale green", width=900, height=10)
+        # self.contendor_cuadrados.propagate(0)
+        self.contendor_cuadrados.pack_propagate(0)
+        self.contendor_cuadrados.pack(side='top')
+
         self.frame_control = Frame(
             self.master, bg='pale green', width=400, height=10)
         self.frame_control.grid_propagate(0)
@@ -57,7 +78,7 @@ class Wordle(Frame):
     def dibujar_cuadros_grises(self):
         for f in range(6):
             for j in range(difi):
-                self.cuadros = Label(self.frame_cuadros, width=5, height=2 , fg='white',
+                self.cuadros = Label(self.contendor_cuadrados, width=5, height=2 , fg='white',
                                          bg=self.gris, font=('Geometr706 BlkCn BT', 25, 'bold'))
                 self.cuadros.grid(column=j, row=f, padx=5, pady=5)
                 self.cuadros['bg'] = self.gris
@@ -73,6 +94,7 @@ class Wordle(Frame):
         with archivo:
             for linea in archivo:
                 palabra = linea.strip("\n")
+                palabra = normalize(palabra)
                 self.lemario.add(palabra)
             self.p_a = random.choice(list(self.lemario))    #Convertir el set a una lista es 0(N)
 
@@ -84,7 +106,7 @@ class Wordle(Frame):
             print(f"Palabra: {self.p_a}, Intento: {palabra}")
             if self.fila <= 6:
                 for i, letra in enumerate(palabra):
-                    self.cuadros = Label(self.frame_cuadros, width=5, height=2 , fg='white',
+                    self.cuadros = Label(self.contendor_cuadrados, width=5, height=2 , fg='white',
                                          bg=self.gris, text=letra.upper(), font=('Geometr706 BlkCn BT', 25, 'bold'))
                     self.cuadros.grid(column=i, row=self.fila, padx=5, pady=5)
                     if letra == self.p_a[i]:
